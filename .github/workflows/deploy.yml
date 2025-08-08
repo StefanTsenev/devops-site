@@ -1,0 +1,25 @@
+cat > .github/workflows/deploy.yml <<'YAML'
+name: Deploy (Self-Hosted)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, X64]   # смени според твоите labels, или остави само: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show runner info (debug)
+        run: |
+          uname -a
+          whoami
+          pwd
+
+      - name: Deploy to Nginx
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh
+YAML
