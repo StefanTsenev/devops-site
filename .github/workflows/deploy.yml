@@ -1,4 +1,3 @@
-cat > .github/workflows/deploy.yml <<'YAML'
 name: Deploy (Self-Hosted)
 
 on:
