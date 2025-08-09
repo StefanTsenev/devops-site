@@ -1,8 +1,12 @@
-set -euopipefail
+set -Eeuo pipefail
 
-RC_DIR="$(cd "$(dirname "$0")" && pwd)"
+SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEST_DIR="/var/www/html"
 
+# Синхронизирай проектните файлове към nginx docroot
 rsync -av --delete --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r "$SRC_DIR/" "$DEST_DIR/"
+
+# Релоуд/рестарт на nginx (ако не е нужен, може да се махне)
 systemctl reload nginx || systemctl restart nginx
-echo "Deploy OK → http://127.0.0.1:8080"
+
+echo "Deploy OK"
